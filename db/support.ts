@@ -1,0 +1,3 @@
+import {bagDb} from './bag';
+export const defaults={shipping:'Frilix is preparing for launch. We are not accepting orders yet. Shipping destinations, rates and delivery estimates will be confirmed before checkout opens.',returns:'Frilix is not accepting orders yet. Return and exchange instructions will be published before launch. For questions about a design, use our contact form.',supportEmail:''};
+export async function getStoreInfo(){const {results}=await bagDb().prepare('SELECT key, value FROM store_info').all();const info={...defaults};for(const row of results as any[])if(row.key in info)info[row.key as keyof typeof info]=row.value;return info;}

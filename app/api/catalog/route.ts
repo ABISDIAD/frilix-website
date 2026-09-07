@@ -1,0 +1,2 @@
+import {getProducts,getCollectionDetails} from '../../../db/products';
+export async function GET(){try{const pieces=await getProducts();const details=await getCollectionDetails();return Response.json({pieces,collections:details.filter((c:any)=>pieces.some(p=>p.collection===c.name)),featured:details.find((c:any)=>c.featured&&pieces.some(p=>p.collection===c.name))||null},{headers:{'Cache-Control':'no-store'}});}catch{return Response.json({error:'The catalog is temporarily unavailable. Please try again.'},{status:503});}}
